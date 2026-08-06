@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Le Petit Monde / Espace Maternelle & Portfolio - Amani</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --purple: #9F7AEA;
+            --orange: #ED8936;
+            --bg-main: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            padding: 15px;
+            min-height: 100vh;
+        }
+
+        .main-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-family: 'Fredoka', sans-serif;
+            margin: 0;
+            font-size: 2rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+        }
+
+        @media(min-width: 768px) {
+            h1 { font-size: 2.8rem; }
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            cursor: pointer;
+            opacity: 0.95;
+        }
+
+        /* SECTION PROFIL MISTER AMANI SUR LA FICHE MAT1 */
+        .amani-intro {
+            background: white;
+            border-radius: 25px;
+            padding: 25px;
+            max-width: 900px;
+            margin: 0 auto 35px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            border-top: 8px solid var(--secondary);
+        }
+
+        @media(min-width: 768px) {
+            .amani-intro {
+                flex-direction: row;
+                text-align: left;
+                padding: 35px;
+                gap: 30px;
+            }
+        }
+
+        .amani-profile-col {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .amani-photo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--secondary);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            margin-bottom: 12px;
+        }
+
+        .amani-text {
+            flex: 1;
+        }
+
+        .amani-text h3 {
+            font-family: 'Fredoka', sans-serif;
+            margin: 0 0 10px 0;
+            color: var(--dark);
+            font-size: 1.6rem;
+        }
+
+        .amani-text h3 a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .amani-text h3 a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .amani-text > p {
+            margin: 0 0 15px 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #4A5568;
+        }
+
+        .amani-contact {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            font-weight: bold;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        @media(min-width: 768px) {
+            .amani-contact { justify-content: flex-start; }
+        }
+
+        .amani-contact span {
+            background: #EDF2F7;
+            padding: 6px 12px;
+            border-radius: 10px;
+            color: #2D3748;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        /* BOUTON DÉDIÉ POUR VOIR LE CV */
+        .btn-cv-action {
+            background: linear-gradient(135deg, var(--secondary), #3182CE);
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s, filter 0.2s;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .btn-cv-action:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        /* GRILLE DES THÈMES (ACCUEIL MAT1) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 8px solid var(--primary);
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:nth-child(2) { border-top-color: #48BB78; }
+        .card:nth-child(3) { border-top-color: var(--orange); }
+        .card:nth-child(4) { border-top-color: var(--purple); }
+        .card:nth-child(5) { border-top-color: #ED64A6; }
+        .card:nth-child(6) { border-top-color: #3182CE; }
+        .card:nth-child(7) { border-top-color: #D69E2E; }
+        .card:nth-child(8) { border-top-color: #4299E1; }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 12px;
+        }
+
+        .card h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin: 5px 0;
+        }
+
+        .card p.card-sub {
+            font-size: 0.9rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* VUE DÉTAIL DU THÈME */
+        #detail-view {
+            display: none;
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        @media(min-width: 768px) {
+            #detail-view { padding: 40px; }
+        }
+
+        /* VUE CV PROFESSIONNEL */
+        #cv-view {
+            display: none;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            background-color: #E2E8F0;
+            border: none;
+            color: var(--dark);
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: background-color 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover { 
+            background-color: #CBD5E0;
+            transform: translateX(-3px);
+        }
+
+        /* STYLES INTERNES DU CV */
+        .cv-container {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .cv-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            padding: 40px 16px 30px;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary);
+            border-radius: 16px 16px 0 0;
+            margin-bottom: 20px;
+        }
+
+        .cv-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #ffffff, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cv-tagline {
+            font-size: 0.9rem;
+            color: #93c5fd;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .cv-location {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+
+        .badge-companies {
+            background: rgba(37, 99, 235, 0.2);
+            color: #93c5fd;
+            border: 1px solid rgba(37, 99, 235, 0.4);
+            padding: 8px 16px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .card-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        h2.section-title {
+            font-size: 1.25rem;
+            color: #0f172a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            border-bottom: 2px solid #eff6ff;
+            padding-bottom: 10px;
+        }
+
+        h2.section-title i {
+            margin-right: 10px;
+            color: var(--secondary);
+            background: #eff6ff;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+
+        .cv-container p {
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+        }
+
+        .cv-container strong { color: #0f172a; font-weight: 600; }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .expertise-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 550px) {
+            .expertise-grid { grid-template-columns: 1fr; }
+        }
+
+        .expertise-card {
+            background: #eff6ff;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #dbeafe;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .expertise-card h3 {
+            font-size: 0.95rem;
+            color: #0f172a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 25px;
+        }
+
+        .expertise-card ul {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .expertise-card ul li {
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .expertise-card ul li::before {
+            content: "•";
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .experience-item {
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .job-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.3;
+        }
+
+        .company-name {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .experience-item ul {
+            list-style: none;
+            margin-top: 8px;
+        }
+
+        .experience-item ul li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .experience-item ul li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 768px) {
+            .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .styled-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            line-height: 1.4;
+        }
+
+        .styled-table td:first-child {
+            font-weight: 500;
+            color: #0f172a;
+            width: 60%;
+        }
+
+        .styled-table td:last-child {
+            text-align: right;
+            color: var(--accent);
+            letter-spacing: 1px;
+            font-weight: bold;
+            width: 40%;
+        }
+
+        .detail-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .detail-header h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+
+        .detail-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .lang-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 16px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+        }
+
+        .btn-audio {
+            background-color: var(--secondary);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
+            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s, filter 0.2s;
+        }
+
+        .btn-audio:hover {
+            transform: scale(1.03);
+            filter: brightness(1.05);
+        }
+
+        .btn-audio.en { 
+            background-color: #4299E1;
+            box-shadow: 0 4px 10px rgba(66, 153, 225, 0.3);
+        }
+
+        .vocab-container {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 3px dashed #E2E8F0;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .vocab-card {
+            background: #F8FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .vocab-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-color: var(--secondary);
+        }
+
+        .vocab-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 12px;
+        }
+
+        .vocab-card p {
+            margin: 0 0 12px 0;
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .vocab-btns {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-small {
+            background-color: var(--secondary);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.1s;
+        }
+
+        .btn-small:active { transform: scale(0.95); }
+        .btn-small.en { background-color: #4299E1; }
+
+        .phrases-container {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 3px dashed #E2E8F0;
+        }
+
+        .phrase-item {
+            background: #F8FAFC;
+            border-left: 6px solid #4299E1;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 0 16px 16px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        @media(min-width: 768px) {
+            .phrase-item {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .phrase-text {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .phrase-btns {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 45px;
+            font-size: 0.9rem;
+            color: #4A5568;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <header>
+            <h1 onclick="showHome()">🌟 Le Petit Monde / The Little World 🌟</h1>
+            <p class="subtitle" onclick="showHome()">Clique sur un thème pour découvrir les images et écouter les prononciations !</p>
+        </header>
+
+        <!-- SECTION PRÉSENTATION DE MISTER AMANI AVEC BOUTON CLIQUE POUR VOIR LE CV -->
+        <section class="amani-intro" id="intro-amani">
+            <div class="amani-profile-col">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Mister Amani" class="amani-photo">
+                <div class="amani-contact">
+                    <span>📞 +243 000 000 000</span>
+                    <span>📧 amani@example.com</span>
+                </div>
+                <button class="btn-cv-action" onclick="showCV()">
+                    <i class="fas fa-file-alt"></i> Voir le CV de Mister Amani
+                </button>
+            </div>
+            <div class="amani-text">
+                <h3>👨‍🏫 Mot de <a href="#" onclick="showCV(); return false;">Mister Amani</a></h3>
+                <p>Ce site a été conçu avec passion pour permettre aux parents et aux enfants de travailler et d'apprendre facilement à la maison. Cliquez sur mon nom ou sur le bouton ci-contre pour découvrir mon parcours complet !</p>
+            </div>
+        </section>
+
+        <!-- ACCUEIL : Grille des thèmes -->
+        <div class="grid-container" id="home-container"></div>
+
+        <!-- VUE DÉTAIL DU THÈME -->
+        <div id="detail-view">
+            <button class="back-btn" onclick="showHome()">⬅️ Retour aux thèmes / Back</button>
+            <div id="detail-content"></div>
+        </div>
+
+        <!-- VUE CV PROFESSIONNEL D'AMANI -->
+        <div id="cv-view">
+            <button class="back-btn" onclick="showHome()">⬅️ Retour à l'accueil</button>
+            <div class="cv-container">
+                <div class="cv-header">
+                    <h1>AMANI DJUMA AMANI</h1>
+                    <div class="cv-tagline">Entrepreneur • Formateur en anglais • Consultant • Éducateur • Développeur assisté par IA</div>
+                    <div class="cv-location"><i class="fas fa-map-marker-alt"></i> Kinshasa, République Démocratique du Congo</div>
+                    <div class="badge-companies">
+                        Fondateur d’Amani Consulting Agency & Mema Nga • Co-fondateur de WorldConnect Inc.
+                    </div>
+                </div>
+
+                <main>
+                    <!-- Profil -->
+                    <section class="card-section">
+                        <h2 class="section-title"><i class="fas fa-user-tie"></i>Profil Professionnel</h2>
+                        <p>Entrepreneur social, formateur et consultant congolais spécialisé dans l’éducation, la formation en anglais, l’accompagnement professionnel, l’entrepreneuriat et les solutions numériques.</p>
+                        <p>Je dispose de <strong>plus de 10 ans d’expérience dans l’enseignement de l’anglais</strong> et <strong>plus de 5 ans dans l’encadrement des jeunes</strong>. Mon parcours m’a permis de développer une approche pédagogique adaptée à tous les niveaux.</p>
+                        <p>Titulaire d’une <strong>Licence en Gestion des Entreprises</strong> (ISP Gombe), je possède également plus de 7 ans d’expérience dans les milieux associatifs et entrepreneuriaux, incluant des collaborations internationales (<strong>Share With Orphans</strong>, États-Unis).</p>
+                        <p>Passionné par l’innovation, j'intègre l'intelligence artificielle dans mes méthodes et mes développements pour créer des solutions performantes.</p>
+                    </section>
+
+                    <!-- Domaines d'Expertise -->
+                    <section class="card-section">
+                        <h2 class="section-title"><i class="fas fa-brain"></i>Domaines d’Expertise</h2>
+                        <div class="expertise-grid">
+                            <div class="expertise-card">
+                                <h3><i class="fas fa-graduation-cap"></i> Formation</h3>
+                                <ul>
+                                    <li>Anglais tous publics</li>
+                                    <li>Pédagogie & Suivi</li>
+                                    <li>Programmes en ligne</li>
+                                </ul>
+                            </div>
+                            <div class="expertise-card">
+                                <h3><i class="fas fa-briefcase"></i> Gestion</h3>
+                                <ul>
+                                    <li>Gestion d'entreprises</li>
+                                    <li>Management & Admin</li>
+                                    <li>Accompagnement PME</li>
+                                </ul>
+                            </div>
+                            <div class="expertise-card">
+                                <h3><i class="fas fa-laptop-code"></i> Numérique</h3>
+                                <ul>
+                                    <li>Marketing digital</li>
+                                    <li>Plateformes web & IA</li>
+                                    <li>Solutions d'entreprise</li>
+                                </ul>
+                            </div>
+                            <div class="expertise-card">
+                                <h3><i class="fas fa-heart"></i> Social</h3>
+                                <ul>
+                                    <li>Autonomisation jeunes</li>
+                                    <li>Projets communautaires</li>
+                                    <li>Milieu associatif</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Expérience Professionnelle -->
+                    <section class="card-section">
+                        <h2 class="section-title"><i class="fas fa-history"></i>Expérience Professionnelle</h2>
+                        <div class="experience-item">
+                            <div class="job-title">FONDATEUR & DIRECTEUR</div>
+                            <span class="company-name">Amani Consulting Agency — Kinshasa, RDC</span>
+                            <ul>
+                                <li>Développement et gestion de projets professionnels et formations en ligne.</li>
+                                <li>Conseil aux entrepreneurs, services de traduction et interprétation.</li>
+                                <li>Développement de solutions numériques et utilisation de l'IA.</li>
+                            </ul>
+                        </div>
+                        <div class="experience-item">
+                            <div class="job-title">CO-FONDATEUR</div>
+                            <span class="company-name">WorldConnect Inc. — International</span>
+                            <ul>
+                                <li>Pilotage de la "WorldConnect Academy" (Anglais et Informatique).</li>
+                                <li>Support IT, solutions professionnelles, logistique et services de voyage.</li>
+                            </ul>
+                        </div>
+                        <div class="experience-item">
+                            <div class="job-title">FONDATEUR</div>
+                            <span class="company-name">Mema Nga — Kinshasa, RDC</span>
+                            <ul>
+                                <li>Création d'un service innovant de livraison, récupération et transport de colis à Kinshasa, facilitant le quotidien des particuliers et entreprises.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Formation & Associatif -->
+                    <div class="grid-2">
+                        <section class="card-section" style="margin-bottom: 0;">
+                            <h2 class="section-title"><i class="fas fa-globe"></i>Associatif</h2>
+                            <div class="job-title">Share With Orphans</div>
+                            <span class="company-name">États-Unis</span>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0;">Participation active à des programmes d'éducation et de développement humain dans un cadre associatif international.</p>
+                        </section>
+                        <section class="card-section" style="margin-bottom: 0;">
+                            <h2 class="section-title"><i class="fas fa-graduation-cap"></i>Formation</h2>
+                            <div class="job-title">LICENCE EN GESTION</div>
+                            <span class="company-name">ISP Gombe — Kinshasa, RDC</span>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0;">Management, administration, finances, entrepreneuriat, marketing et gestion de projets.</p>
+                        </section>
+                    </div>
+
+                    <div style="height: 20px;"></div>
+
+                    <!-- Compétences & Langues -->
+                    <section class="card-section">
+                        <h2 class="section-title"><i class="fas fa-star"></i>Compétences & Langues</h2>
+                        <div class="grid-2">
+                            <div>
+                                <table class="styled-table">
+                                    <tr><td>Enseignement Anglais</td><td>★★★★★</td></tr>
+                                    <tr><td>Encadrement Jeunes</td><td>★★★★★</td></tr>
+                                    <tr><td>Formation Adultes</td><td>★★★★★</td></tr>
+                                </table>
+                            </div>
+                            <div>
+                                <table class="styled-table">
+                                    <tr><td>Gestion de Projets</td><td>★★★★☆</td></tr>
+                                    <tr><td>Marketing Digital</td><td>★★★★☆</td></tr>
+                                    <tr><td>Développement IA</td><td>★★★★☆</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        <p style="margin-top: 15px; font-size: 0.9rem;"><strong>Langues :</strong> Français (Courant) &nbsp;|&nbsp; Anglais (Très bon niveau professionnel)</p>
+                    </section>
+                </main>
+            </div>
+            <button class="back-btn" style="margin-top: 20px;" onclick="showHome()">⬅️ Retour à l'accueil</button>
+        </div>
+
+        <footer>
+            <p>Plateforme Éducative Maternelle & Portfolio — Conçue par Mister Amani — Bilingue (FR/EN)</p>
+        </footer>
+    </div>
+
+    <script>
+        const themesData = [
+            {
+                id: 1,
+                frTitle: "La rentrée scolaire",
+                enTitle: "Back to School",
+                frDesc: "Découvrir l'école, les règles de la classe, les fournitures, les camarades, les routines quotidiennes.",
+                enDesc: "Discovering school, classroom rules, supplies, classmates, daily routines.",
+                image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80",
+                vocab: [
+                    { fr: "L'école", en: "School", img: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le crayon", en: "Pencil", img: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le livre", en: "Book", img: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le sac à dos", en: "Backpack", img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le cahier", en: "Notebook", img: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le stylo", en: "Pen", img: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La gomme", en: "Eraser", img: "https://images.unsplash.com/photo-1590859808308-3d2d9c515b1a?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La règle", en: "Ruler", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Les ciseaux", en: "Scissors", img: "https://images.unsplash.com/photo-1585336261022-657e2954117b?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La colle", en: "Glue", img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le tableau", en: "Blackboard", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le bureau", en: "Desk", img: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La chaise", en: "Chair", img: "https://images.unsplash.com/photo-1580481077494-e3299ac25e94?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'élève", en: "Student", img: "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le professeur", en: "Teacher", img: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La classe", en: "Classroom", img: "https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La cour de récréation", en: "Playground", img: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le couloir", en: "Hallway", img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La cantine", en: "Cafeteria", img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le bus scolaire", en: "School bus", img: "https://images.unsplash.com/photo-1557223562-6c77ef1ae210?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 2,
+                frTitle: "Moi et mon corps",
+                enTitle: "Me and My Body",
+                frDesc: "Les parties du corps, les cinq sens, l'hygiène, la santé, les émotions.",
+                enDesc: "Body parts, the five senses, hygiene, health, emotions.",
+                image: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
+                vocab: [
+                    { fr: "La tête", en: "Head", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Les mains", en: "Hands", img: "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Les yeux", en: "Eyes", img: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le nez", en: "Nose", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La bouche", en: "Mouth", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Les oreilles", en: "Ears", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Les cheveux", en: "Hair", img: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le bras", en: "Arm", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La jambe", en: "Leg", img: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le pied", en: "Foot", img: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le doigt", en: "Finger", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le genou", en: "Knee", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le dos", en: "Back", img: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le ventre", en: "Stomach", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le cœur", en: "Heart", img: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La dent", en: "Tooth", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La langue", en: "Tongue", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le visage", en: "Face", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'épaule", en: "Shoulder", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le cou", en: "Neck", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 3,
+                frTitle: "La famille",
+                enTitle: "The Family",
+                frDesc: "Les membres de la famille, les rôles de chacun, les traditions familiales, le respect.",
+                enDesc: "Family members, roles of each, family traditions, respect.",
+                image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80",
+                vocab: [
+                    { fr: "Papa", en: "Father", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Maman", en: "Mother", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le frère", en: "Brother", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La sœur", en: "Sister", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le grand-père", en: "Grandfather", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La grand-mère", en: "Grandmother", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le bébé", en: "Baby", img: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'oncle", en: "Uncle", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La tante", en: "Aunt", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le cousin", en: "Cousin (male)", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La cousine", en: "Cousin (female)", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Les parents", en: "Parents", img: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Les grands-parents", en: "Grandparents", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'enfant", en: "Child", img: "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La famille", en: "Family", img: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le fils", en: "Son", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La fille", en: "Daughter", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le mari", en: "Husband", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'épouse", en: "Wife", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'ami", en: "Friend", img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 4,
+                frTitle: "La maison",
+                enTitle: "The House",
+                frDesc: "Les pièces de la maison, les meubles, les objets du quotidien, la sécurité à la maison.",
+                enDesc: "Rooms of the house, furniture, everyday objects, home safety.",
+                image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
+                vocab: [
+                    { fr: "La porte", en: "Door", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La table", en: "Table", img: "https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La maison", en: "House", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La fenêtre", en: "Window", img: "https://images.unsplash.com/photo-1509644851169-2018dd632575?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le salon", en: "Living room", img: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La cuisine", en: "Kitchen", img: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La chambre", en: "Bedroom", img: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La salle de bains", en: "Bathroom", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le lit", en: "Bed", img: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La chaise", en: "Chair", img: "https://images.unsplash.com/photo-1580481077494-e3299ac25e94?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le canapé", en: "Sofa", img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La télévision", en: "Television", img: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La lampe", en: "Lamp", img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le jardin", en: "Garden", img: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le toit", en: "Roof", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le mur", en: "Wall", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le sol", en: "Floor", img: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'escalier", en: "Stairs", img: "https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le garage", en: "Garage", img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La clé", en: "Key", img: "https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 5,
+                frTitle: "Les couleurs",
+                enTitle: "Colors",
+                frDesc: "Identifier les couleurs, les mélanges, les objets colorés, activités artistiques.",
+                enDesc: "Identifying colors, mixing, colored objects, artistic activities.",
+                image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=80",
+                vocab: [
+                    { fr: "Le rouge", en: "Red", img: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le bleu", en: "Blue", img: "https://images.unsplash.com/photo-1507908708918-778587c9e563?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le vert", en: "Green", img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le jaune", en: "Yellow", img: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le noir", en: "Black", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le blanc", en: "White", img: "https://images.unsplash.com/photo-1533158307587-828f0a76ef46?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'orange", en: "Orange", img: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le rose", en: "Pink", img: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le violet", en: "Purple", img: "https://images.unsplash.com/photo-1558470598-a5dda9640f68?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le marron", en: "Brown", img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le gris", en: "Grey", img: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'or", en: "Gold", img: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'argent", en: "Silver", img: "https://images.unsplash.com/photo-1533158307587-828f0a76ef46?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La couleur", en: "Color", img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Clair", en: "Light", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Sombre", en: "Dark", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Brillant", en: "Shiny", img: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Multicolore", en: "Colorful", img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le bleu clair", en: "Light blue", img: "https://images.unsplash.com/photo-1507908708918-778587c9e563?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le vert foncé", en: "Dark green", img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 6,
+                frTitle: "Les formes géométriques",
+                enTitle: "Geometric Shapes",
+                frDesc: "Cercle, carré, triangle, rectangle, comparaison et classement.",
+                enDesc: "Circle, square, triangle, rectangle, comparison and classification.",
+                image: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=1200&q=80",
+                vocab: [
+                    { fr: "Le cercle", en: "Circle", img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le carré", en: "Square", img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le triangle", en: "Triangle", img: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le rectangle", en: "Rectangle", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'étoile", en: "Star", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le cœur", en: "Heart", img: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'ovale", en: "Oval", img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le losange", en: "Diamond", img: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La ligne", en: "Line", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le point", en: "Dot", img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La forme", en: "Shape", img: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le cube", en: "Cube", img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La sphère", en: "Sphere", img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le cylindre", en: "Cylinder", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le cône", en: "Cone", img: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "La pyramide", en: "Pyramid", img: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "L'angle", en: "Angle", img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Grand", en: "Big", img: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Petit", en: "Small", img: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Le contour", en: "Outline", img: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 7,
+                frTitle: "Les nombres",
+                enTitle: "Numbers",
+                frDesc: "Compter jusqu'à 30 et reconnaître les chiffres.",
+                enDesc: "Counting up to 30 and recognizing numbers.",
+                image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=80",
+                vocab: [
+                    { fr: "Un (1)", en: "One (1)", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Deux (2)", en: "Two (2)", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Trois (3)", en: "Three (3)", img: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Quatre (4)", en: "Four (4)", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Cinq (5)", en: "Five (5)", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Six (6)", en: "Six (6)", img: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Sept (7)", en: "Seven (7)", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Huit (8)", en: "Eight (8)", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Neuf (9)", en: "Nine (9)", img: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Dix (10)", en: "Ten (10)", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Onze (11)", en: "Eleven (11)", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Douze (12)", en: "Twelve (12)", img: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Treize (13)", en: "Thirteen (13)", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Quatorze (14)", en: "Fourteen (14)", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Quinze (15)", en: "Fifteen (15)", img: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Seize (16)", en: "Sixteen (16)", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Dix-sept (17)", en: "Seventeen (17)", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Dix-huit (18)", en: "Eighteen (18)", img: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Dix-neuf (19)", en: "Nineteen (19)", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" },
+                    { fr: "Vingt (20)", en: "Twenty (20)", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" }
+                ]
+            },
+            {
+                id: 8,
+                frTitle: "30 Phrases courantes",
+                enTitle: "30 Common Phrases",
+                frDesc: "Apprendre à s'exprimer au quotidien avec des phrases utiles.",
+                enDesc: "Learning to express yourself every day.",
+                image: "https://images.unsplash.com/photo-1472162072942-cd5147eb3902?auto=format&fit=crop&w=1200&q=80",
+                vocab: [],
+                phrases: [
+                    { fr: "Bonjour tout le monde !", en: "Hello everyone!" },
+                    { fr: "Comment ça va ?", en: "How are you?" },
+                    { fr: "Je vais bien, merci.", en: "I am fine, thank you." },
+                    { fr: "Quel est ton nom ?", en: "What is your name?" },
+                    { fr: "Mon nom est...", en: "My name is..." },
+                    { fr: "Enchanté de te rencontrer.", en: "Nice to meet you." },
+                    { fr: "S'il vous plaît", en: "Please" },
+                    { fr: "Merci beaucoup", en: "Thank you very much" },
+                    { fr: "De rien", en: "You're welcome" },
+                    { fr: "Au revoir !", en: "Goodbye!" },
+                    { fr: "À demain !", en: "See you tomorrow!" },
+                    { fr: "Puis-je aller aux toilettes ?", en: "May I go to the restroom?" },
+                    { fr: "Je ne comprends pas.", en: "I don't understand." },
+                    { fr: "Pouvez-vous répéter ?", en: "Can you repeat?" },
+                    { fr: "C'est l'heure de jouer !", en: "It's playtime!" },
+                    { fr: "Rangeons les jouets.", en: "Let's clean up." },
+                    { fr: "Ouvrez vos livres.", en: "Open your books." },
+                    { fr: "Écoutez attentivement.", en: "Listen carefully." },
+                    { fr: "Levez la main.", en: "Raise your hand." },
+                    { fr: "Asseyez-vous, s'il vous plaît.", en: "Sit down, please." },
+                    { fr: "Levez-vous.", en: "Stand up." },
+                    { fr: "C'est l'heure de la pause.", en: "It's break time." },
+                    { fr: "Bon appétit !", en: "Enjoy your meal!" },
+                    { fr: "J'ai une question.", en: "I have a question." },
+                    { fr: "C'est correct !", en: "That's correct!" },
+                    { fr: "Excellent travail !", en: "Great job!" },
+                    { fr: "Félicitations !", en: "Congratulations!" },
+                    { fr: "Je suis désolé.", en: "I am sorry." },
+                    { fr: "Pardonnez-moi.", en: "Excuse me." },
+                    { fr: "Passe une bonne journée !", en: "Have a nice day!" }
+                ]
+            }
+        ];
+
+        const homeContainer = document.getElementById('home-container');
+        const detailView = document.getElementById('detail-view');
+        const detailContent = document.getElementById('detail-content');
+        const cvView = document.getElementById('cv-view');
+        const introAmani = document.getElementById('intro-amani');
+
+        function speakText(text, lang) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang === 'fr' ? 'fr-FR' : 'en-US';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Désolé, votre navigateur ne supporte pas la lecture audio.");
+            }
+        }
+
+        function renderHome() {
+            homeContainer.innerHTML = '';
+            themesData.forEach(theme => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openThemeDetail(theme.id);
+                card.innerHTML = `
+                    <div>
+                        <img src="${theme.image}" alt="${theme.frTitle}">
+                        <h2>${theme.frTitle}</h2>
+                    </div>
+                    <p class="card-sub">${theme.enTitle}</p>
+                `;
+                homeContainer.appendChild(card);
+            });
+        }
+
+        function openThemeDetail(id) {
+            const theme = themesData.find(t => t.id === id);
+            if (!theme) return;
+
+            homeContainer.style.display = 'none';
+            introAmani.style.display = 'none';
+            cvView.style.display = 'none';
+            detailView.style.display = 'block';
+
+            let vocabHTML = '';
+            if (theme.vocab && theme.vocab.length > 0) {
+                theme.vocab.forEach(v => {
+                    vocabHTML += `
+                        <div class="vocab-card">
+                            <img src="${v.img}" alt="${v.fr}">
+                            <p>🇫🇷 ${v.fr}<br>🇬🇧 ${v.en}</p>
+                            <div class="vocab-btns">
+                                <button class="btn-small" onclick="speakText('${v.fr}', 'fr')">🔊 FR</button>
+                                <button class="btn-small en" onclick="speakText('${v.en}', 'en')">🔊 EN</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            let phrasesHTML = '';
+            if (theme.phrases && theme.phrases.length > 0) {
+                theme.phrases.forEach((p, index) => {
+                    phrasesHTML += `
+                        <div class="phrase-item">
+                            <div class="phrase-text">
+                                <strong>${index + 1}.</strong> 🇫🇷 ${p.fr} <br>
+                                <span style="color: #4299E1; font-weight: normal; font-size: 0.95rem;">🇬🇧 ${p.en}</span>
+                            </div>
+                            <div class="phrase-btns">
+                                <button class="btn-small" onclick="speakText('${p.fr}', 'fr')">🔊 FR</button>
+                                <button class="btn-small en" onclick="speakText('${p.en}', 'en')">🔊 EN</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            detailContent.innerHTML = `
+                <div class="detail-header">
+                    <h2>🌟 ${theme.frTitle} / ${theme.enTitle} 🌟</h2>
+                </div>
+                <img class="detail-img" src="${theme.image}" alt="${theme.frTitle}">
+                
+                <div class="lang-section">
+                    <p style="font-size: 1.1rem; margin: 0 0 10px 0;"><strong>Français :</strong> ${theme.frDesc}</p>
+                    <button class="btn-audio" onclick="speakText('${theme.frTitle}. ${theme.frDesc}', 'fr')">
+                        🔊 Écouter le cours (FR)
+                    </button>
+                </div>
+
+                <div class="lang-section">
+                    <p style="font-size: 1.1rem; margin: 0 0 10px 0;"><strong>English :</strong> ${theme.enDesc}</p>
+                    <button class="btn-audio en" onclick="speakText('${theme.enTitle}. ${theme.enDesc}', 'en')">
+                        🔊 Listen to lesson (EN)
+                    </button>
+                </div>
+
+                ${theme.vocab && theme.vocab.length > 0 ? `
+                <div class="vocab-container">
+                    <h3 style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; text-align: center; margin-bottom: 20px;">🖼️ Les 20 mots illustrés</h3>
+                    <div class="vocab-grid">${vocabHTML}</div>
+                </div>
+                ` : ''}
+
+                ${theme.phrases && theme.phrases.length > 0 ? `
+                <div class="phrases-container">
+                    <h3 style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; text-align: center; margin-bottom: 20px;">💬 Phrases courantes (FR / EN)</h3>
+                    <div style="margin-top: 20px;">${phrasesHTML}</div>
+                </div>
+                ` : ''}
+            `;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showCV() {
+            homeContainer.style.display = 'none';
+            introAmani.style.display = 'none';
+            detailView.style.display = 'none';
+            cvView.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showHome() {
+            detailView.style.display = 'none';
+            cvView.style.display = 'none';
+            homeContainer.style.display = 'grid';
+            introAmani.style.display = 'flex';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        renderHome();
+    </script>
+</body>
+</html>
