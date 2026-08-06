@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Le Petit Monde / Espace Maternelle & Portfolio - Amani</title>
+    <title>Le Petit Monde & Espace Pro - Amani</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome pour les icônes -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #FF6B6B;
-            --secondary: #4ECDC4;
-            --accent: #FFE66D;
-            --dark: #2D3748;
-            --light: #F7FAFC;
-            --purple: #9F7AEA;
-            --orange: #ED8936;
-            --bg-main: #f1f5f9;
+            --primary: #6366f1;
+            --primary-light: #e0e7ff;
+            --secondary: #0ea5e9;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #334155;
             --text-muted: #64748b;
             --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.05);
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.02);
+            --radius: 20px;
         }
 
         * {
@@ -32,11 +31,15 @@
         }
 
         body {
-            font-family: 'Quicksand', 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: var(--dark);
-            padding: 15px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f1f5f9;
+            color: var(--text-main);
             min-height: 100vh;
+            padding: 10px 20px;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
         }
 
         .main-wrapper {
@@ -44,57 +47,157 @@
             margin: 0 auto;
         }
 
+        /* HEADER PREMIUM GLASSMORPHISM */
         header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             text-align: center;
-            background: linear-gradient(135deg, var(--primary), var(--purple));
-            color: white;
-            padding: 30px 20px;
-            border-radius: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
         }
 
         h1 {
-            font-family: 'Fredoka', sans-serif;
-            margin: 0;
-            font-size: 2rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 5px;
             cursor: pointer;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+            letter-spacing: -0.5px;
         }
 
         @media(min-width: 768px) {
-            h1 { font-size: 2.8rem; }
+            h1 { font-size: 3rem; }
         }
 
         p.subtitle {
-            font-size: 1.1rem;
-            margin-top: 10px;
+            font-size: 1.05rem;
+            color: var(--text-muted);
             cursor: pointer;
-            opacity: 0.95;
+            font-weight: 500;
         }
 
-        /* SECTION PROFIL MISTER AMANI SUR LA FICHE MAT1 */
+        /* SECTION ACCUEIL & INSTRUCTIONS GUIDÉES */
+        .welcome-instructions-box {
+            background: linear-gradient(135deg, #ffffff, var(--light));
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .welcome-instructions-box h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .welcome-instructions-box p.welcome-msg {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .step-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .step-card span.step-number {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 800;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-bottom: 8px;
+        }
+
+        .step-card h4 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--dark);
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+
+        .step-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .btn-main-action {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .btn-main-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        /* SECTION PROFIL MISTER AMANI */
         .amani-intro {
-            background: white;
-            border-radius: 25px;
-            padding: 25px;
-            max-width: 900px;
-            margin: 0 auto 35px auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto 20px auto;
+            box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
             gap: 20px;
-            border-top: 8px solid var(--secondary);
+            border: 1px solid var(--border);
         }
 
         @media(min-width: 768px) {
             .amani-intro {
                 flex-direction: row;
                 text-align: left;
-                padding: 35px;
+                padding: 30px;
                 gap: 30px;
             }
         }
@@ -107,13 +210,13 @@
         }
 
         .amani-photo {
-            width: 130px;
-            height: 130px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid var(--secondary);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-            margin-bottom: 12px;
+            border: 4px solid var(--primary-light);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+            margin-bottom: 10px;
         }
 
         .amani-text {
@@ -121,28 +224,28 @@
         }
 
         .amani-text h3 {
-            font-family: 'Fredoka', sans-serif;
-            margin: 0 0 10px 0;
+            font-family: 'Outfit', sans-serif;
+            margin: 0 0 8px 0;
             color: var(--dark);
             font-size: 1.6rem;
+            font-weight: 700;
         }
 
         .amani-text h3 a {
-            color: var(--secondary);
+            color: var(--primary);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: opacity 0.2s;
         }
 
         .amani-text h3 a:hover {
-            color: var(--primary);
-            text-decoration: underline;
+            opacity: 0.8;
         }
 
         .amani-text > p {
             margin: 0 0 15px 0;
-            font-size: 1.05rem;
+            font-size: 1rem;
             line-height: 1.6;
-            color: #4A5568;
+            color: var(--text-muted);
         }
 
         .amani-contact {
@@ -150,237 +253,240 @@
             gap: 10px;
             flex-wrap: wrap;
             font-size: 0.85rem;
-            font-weight: bold;
+            font-weight: 600;
             justify-content: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         @media(min-width: 768px) {
             .amani-contact { justify-content: flex-start; }
         }
 
-        .amani-contact span {
-            background: #EDF2F7;
+        .amani-contact a {
+            background: var(--light);
             padding: 6px 12px;
-            border-radius: 10px;
-            color: #2D3748;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            border-radius: 12px;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
         }
 
-        /* BOUTON DÉDIÉ POUR VOIR LE CV */
+        .amani-contact a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary-light);
+        }
+
+        /* BOUTON CV */
         .btn-cv-action {
-            background: linear-gradient(135deg, var(--secondary), #3182CE);
+            background: linear-gradient(135deg, var(--primary), #4f46e5);
             color: white;
             border: none;
             padding: 12px 22px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 14px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: transform 0.2s, filter 0.2s;
-            font-family: 'Quicksand', sans-serif;
+            transition: all 0.3s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         .btn-cv-action:hover {
             transform: translateY(-2px);
-            filter: brightness(1.05);
+            box-shadow: 0 15px 25px rgba(99, 102, 241, 0.4);
         }
 
-        /* GRILLE DES THÈMES (ACCUEIL MAT1) */
+        /* GRILLE DES THÈMES */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .card {
-            background: white;
-            border-radius: 20px;
-            padding: 15px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-top: 8px solid var(--primary);
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid var(--border);
             cursor: pointer;
-            text-align: center;
+            text-align: left;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card:nth-child(2) { border-top-color: #48BB78; }
-        .card:nth-child(3) { border-top-color: var(--orange); }
-        .card:nth-child(4) { border-top-color: var(--purple); }
-        .card:nth-child(5) { border-top-color: #ED64A6; }
-        .card:nth-child(6) { border-top-color: #3182CE; }
-        .card:nth-child(7) { border-top-color: #D69E2E; }
-        .card:nth-child(8) { border-top-color: #4299E1; }
-
         .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary);
         }
 
         .card img {
             width: 100%;
             height: 150px;
             object-fit: cover;
-            border-radius: 15px;
+            border-radius: 14px;
             margin-bottom: 12px;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.03);
         }
 
         .card h2 {
-            font-family: 'Fredoka', sans-serif;
+            font-family: 'Outfit', sans-serif;
             font-size: 1.25rem;
             color: var(--dark);
-            margin: 5px 0;
+            margin-bottom: 4px;
+            font-weight: 700;
         }
 
         .card p.card-sub {
             font-size: 0.9rem;
-            color: #718096;
-            margin: 0;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
-        /* VUE DÉTAIL DU THÈME */
-        #detail-view {
-            display: none;
-            max-width: 1100px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 25px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        @media(min-width: 768px) {
-            #detail-view { padding: 40px; }
-        }
-
-        /* VUE CV PROFESSIONNEL */
-        #cv-view {
+        /* VUE DÉTAIL & CV */
+        #detail-view, #cv-view {
             display: none;
             max-width: 1000px;
             margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        @media(min-width: 768px) {
+            #detail-view, #cv-view { padding: 40px; }
         }
 
         .back-btn {
-            background-color: #E2E8F0;
-            border: none;
+            background-color: var(--light);
+            border: 1px solid var(--border);
             color: var(--dark);
-            padding: 10px 20px;
-            font-size: 1rem;
-            border-radius: 25px;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
             margin-bottom: 20px;
-            transition: background-color 0.2s, transform 0.2s;
+            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
 
         .back-btn:hover { 
-            background-color: #CBD5E0;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary-light);
             transform: translateX(-3px);
         }
 
-        /* STYLES INTERNES DU CV */
+        /* STYLES INTERNES CV MODERNISÉS */
         .cv-container {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             color: var(--text-main);
             line-height: 1.6;
         }
 
         .cv-header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, var(--dark), #1e293b);
             color: #ffffff;
-            padding: 40px 16px 30px;
+            padding: 35px 20px;
             text-align: center;
-            border-bottom: 4px solid var(--secondary);
-            border-radius: 16px 16px 0 0;
+            border-radius: 16px;
             margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
         }
 
         .cv-header h1 {
-            font-size: 2rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.3rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
             margin-bottom: 8px;
-            background: linear-gradient(to right, #ffffff, #93c5fd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
 
         .cv-tagline {
-            font-size: 0.9rem;
-            color: #93c5fd;
+            font-size: 0.95rem;
+            color: #94a3b8;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            line-height: 1.4;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
         }
 
         .cv-location {
-            font-size: 0.85rem;
-            color: #94a3b8;
+            font-size: 0.9rem;
+            color: #cbd5e1;
             margin-bottom: 15px;
         }
 
         .badge-companies {
-            background: rgba(37, 99, 235, 0.2);
-            color: #93c5fd;
-            border: 1px solid rgba(37, 99, 235, 0.4);
-            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 14px;
             border-radius: 50px;
             display: inline-block;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            word-break: break-word;
         }
 
         .card-section {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
+            background: var(--light);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
             border: 1px solid var(--border);
         }
 
         h2.section-title {
-            font-size: 1.25rem;
-            color: #0f172a;
-            margin-bottom: 20px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            color: var(--dark);
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             font-weight: 700;
-            border-bottom: 2px solid #eff6ff;
+            border-bottom: 2px solid var(--border);
             padding-bottom: 10px;
         }
 
         h2.section-title i {
-            margin-right: 10px;
-            color: var(--secondary);
-            background: #eff6ff;
+            margin-right: 12px;
+            color: var(--primary);
+            background: var(--primary-light);
             padding: 8px;
-            border-radius: 8px;
-            font-size: 1.1rem;
+            border-radius: 12px;
+            font-size: 1rem;
         }
 
         .cv-container p {
-            margin-bottom: 14px;
-            font-size: 0.95rem;
+            margin-bottom: 12px;
+            font-size: 1rem;
         }
 
-        .cv-container strong { color: #0f172a; font-weight: 600; }
+        .cv-container strong { color: var(--dark); font-weight: 600; }
 
         .expertise-grid {
             display: grid;
@@ -396,91 +502,89 @@
         }
 
         .expertise-card {
-            background: #eff6ff;
-            padding: 16px;
-            border-radius: 10px;
-            border: 1px solid #dbeafe;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .expertise-card h3 {
-            font-size: 0.95rem;
-            color: #0f172a;
-            margin-bottom: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            color: var(--dark);
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            min-height: 25px;
+            gap: 8px;
+            font-weight: 700;
         }
 
         .expertise-card ul {
             list-style: none;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
         }
 
         .expertise-card ul li {
             margin-bottom: 6px;
             position: relative;
-            padding-left: 10px;
+            padding-left: 14px;
         }
 
         .expertise-card ul li::before {
             content: "•";
-            color: var(--secondary);
+            color: var(--primary);
             position: absolute;
             left: 0;
             font-weight: bold;
         }
 
         .experience-item {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding-left: 15px;
-            border-left: 3px solid var(--secondary);
+            border-left: 3px solid var(--primary);
         }
 
         .job-title {
-            font-size: 1.05rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
             font-weight: 700;
-            color: #0f172a;
-            line-height: 1.3;
+            color: var(--dark);
         }
 
         .company-name {
-            color: var(--secondary);
+            color: var(--primary);
             font-weight: 600;
             font-size: 0.95rem;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             display: block;
         }
 
         .experience-item ul {
             list-style: none;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         .experience-item ul li {
             position: relative;
-            padding-left: 16px;
+            padding-left: 18px;
             margin-bottom: 4px;
             color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 0.95rem;
         }
 
         .experience-item ul li::before {
             content: "—";
             position: absolute;
             left: 0;
-            color: var(--secondary);
+            color: var(--primary);
         }
 
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 15px;
         }
         @media (min-width: 768px) {
             .grid-2 { grid-template-columns: repeat(2, 1fr); }
@@ -489,164 +593,159 @@
         .styled-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .styled-table td {
-            padding: 8px 10px;
+            padding: 8px 12px;
             border-bottom: 1px solid var(--border);
-            line-height: 1.4;
         }
 
         .styled-table td:first-child {
-            font-weight: 500;
-            color: #0f172a;
-            width: 60%;
+            font-weight: 600;
+            color: var(--dark);
         }
 
         .styled-table td:last-child {
             text-align: right;
             color: var(--accent);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             font-weight: bold;
-            width: 40%;
         }
 
         .detail-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .detail-header h2 {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 1.8rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
             color: var(--dark);
+            font-weight: 800;
         }
 
         .detail-img {
             width: 100%;
-            max-height: 400px;
+            max-height: 350px;
             object-fit: cover;
-            border-radius: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
         }
 
         .lang-section {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             padding: 20px;
             border-radius: 16px;
-            background: #F8FAFC;
-            border: 1px solid #E2E8F0;
+            background: var(--light);
+            border: 1px solid var(--border);
         }
 
         .btn-audio {
-            background-color: var(--secondary);
+            background-color: var(--primary);
             border: none;
             color: white;
             padding: 10px 20px;
-            font-size: 1rem;
-            border-radius: 25px;
+            font-size: 0.95rem;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
-            margin-top: 12px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+            margin-top: 10px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            transition: transform 0.2s, filter 0.2s;
+            gap: 10px;
+            transition: all 0.2s ease;
         }
 
         .btn-audio:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
             filter: brightness(1.05);
         }
 
         .btn-audio.en { 
-            background-color: #4299E1;
-            box-shadow: 0 4px 10px rgba(66, 153, 225, 0.3);
+            background-color: var(--secondary);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
         }
 
-        .vocab-container {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 3px dashed #E2E8F0;
+        .vocab-container, .phrases-container {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--border);
         }
 
         .vocab-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+            gap: 15px;
+            margin-top: 15px;
         }
 
         .vocab-card {
-            background: #F8FAFC;
-            border: 2px solid #E2E8F0;
-            border-radius: 20px;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             padding: 15px;
             text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .vocab-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            border-color: var(--secondary);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
         }
 
         .vocab-card img {
             width: 100%;
-            height: 160px;
+            height: 140px;
             object-fit: cover;
-            border-radius: 14px;
-            margin-bottom: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
         }
 
         .vocab-card p {
-            margin: 0 0 12px 0;
-            font-weight: bold;
+            margin: 0 0 10px 0;
+            font-weight: 700;
             font-size: 1.05rem;
+            color: var(--dark);
         }
 
         .vocab-btns {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .btn-small {
-            background-color: var(--secondary);
+            background-color: var(--primary);
             border: none;
             color: white;
             padding: 6px 12px;
             font-size: 0.85rem;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 700;
             transition: transform 0.1s;
         }
 
         .btn-small:active { transform: scale(0.95); }
-        .btn-small.en { background-color: #4299E1; }
-
-        .phrases-container {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 3px dashed #E2E8F0;
-        }
+        .btn-small.en { background-color: var(--secondary); }
 
         .phrase-item {
-            background: #F8FAFC;
-            border-left: 6px solid #4299E1;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            border-radius: 0 16px 16px 0;
+            background: var(--light);
+            border-left: 5px solid var(--secondary);
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border-radius: 0 14px 14px 0;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            gap: 10px;
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
         }
 
         @media(min-width: 768px) {
@@ -659,7 +758,7 @@
 
         .phrase-text {
             font-size: 1.05rem;
-            font-weight: bold;
+            font-weight: 700;
             color: var(--dark);
         }
 
@@ -669,12 +768,68 @@
             flex-shrink: 0;
         }
 
+        /* FOOTER PROFESSIONNEL */
         footer {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 25px 20px;
+            margin-top: 30px;
+            box-shadow: var(--shadow);
             text-align: center;
-            margin-top: 45px;
-            font-size: 0.9rem;
-            color: #4A5568;
-            padding: 20px;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-content h3 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--dark);
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+
+        .footer-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            background: var(--light);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .footer-links a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary-light);
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
         }
     </style>
 </head>
@@ -682,25 +837,49 @@
 
     <div class="main-wrapper">
         <header>
-            <h1 onclick="showHome()">🌟 Le Petit Monde / The Little World 🌟</h1>
-            <p class="subtitle" onclick="showHome()">Clique sur un thème pour découvrir les images et écouter les prononciations !</p>
+            <h1 onclick="showHome()">✨ Le Petit Monde & Espace Pro ✨</h1>
+            <p class="subtitle" onclick="showHome()">Explorez les thèmes ludo-éducatifs ou découvrez le profil professionnel.</p>
         </header>
 
-        <!-- SECTION PRÉSENTATION DE MISTER AMANI AVEC BOUTON CLIQUE POUR VOIR LE CV -->
+        <!-- SECTION ACCUEIL & INSTRUCTIONS GUIDÉES -->
+        <section class="welcome-instructions-box" id="welcome-box">
+            <h2>👋 Bienvenue sur notre Espace Éducatif !</h2>
+            <p class="welcome-msg">Découvrez ci-dessous les instructions pour accompagner votre enfant dans son apprentissage interactif.</p>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <span class="step-number">1</span>
+                    <h4>Explorez les thèmes</h4>
+                    <p>Parcourez les différents modules ludo-éducatifs disponibles (Rentrée, Corps, Famille, etc.).</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">2</span>
+                    <h4>Écoutez et apprenez</h4>
+                    <p>Utilisez les boutons audio pour écouter la prononciation exacte en Français et en Anglais.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">3</span>
+                    <h4>Suivez les progrès</h4>
+                    <p>Accédez aux fiches de vocabulaire illustrées et aux phrases courantes du quotidien.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION PROFIL MISTER AMANI -->
         <section class="amani-intro" id="intro-amani">
             <div class="amani-profile-col">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Mister Amani" class="amani-photo">
+                <img src="aca.png" alt="Mister Amani" class="amani-photo">
                 <div class="amani-contact">
-                    <span>📞 +243 000 000 000</span>
-                    <span>📧 amani@example.com</span>
+                    <a href="https://wa.me/243827051405" target="_blank"><i class="fab fa-whatsapp" style="color: #25d366;"></i> +243 827 051 405</a>
+                    <a href="mailto:amani@example.com"><i class="fas fa-envelope"></i> Email</a>
                 </div>
                 <button class="btn-cv-action" onclick="showCV()">
-                    <i class="fas fa-file-alt"></i> Voir le CV de Mister Amani
+                    <i class="fas fa-file-lines"></i> Voir le CV Pro
                 </button>
             </div>
             <div class="amani-text">
                 <h3>👨‍🏫 Mot de <a href="#" onclick="showCV(); return false;">Mister Amani</a></h3>
-                <p>Ce site a été conçu avec passion pour permettre aux parents et aux enfants de travailler et d'apprendre facilement à la maison. Cliquez sur mon nom ou sur le bouton ci-contre pour découvrir mon parcours complet !</p>
+                <p>Espace bilingue interactif conçu pour faciliter l'apprentissage des enfants et valoriser les parcours professionnels. Cliquez ci-consulte pour consulter le CV complet !</p>
             </div>
         </section>
 
@@ -709,7 +888,7 @@
 
         <!-- VUE DÉTAIL DU THÈME -->
         <div id="detail-view">
-            <button class="back-btn" onclick="showHome()">⬅️ Retour aux thèmes / Back</button>
+            <button class="back-btn" onclick="showHome()">⬅️ Retour aux thèmes</button>
             <div id="detail-content"></div>
         </div>
 
@@ -719,8 +898,8 @@
             <div class="cv-container">
                 <div class="cv-header">
                     <h1>AMANI DJUMA AMANI</h1>
-                    <div class="cv-tagline">Entrepreneur • Formateur en anglais • Consultant • Éducateur • Développeur assisté par IA</div>
-                    <div class="cv-location"><i class="fas fa-map-marker-alt"></i> Kinshasa, République Démocratique du Congo</div>
+                    <div class="cv-tagline">Entrepreneur • Formateur en anglais • Consultant • Éducateur • Développeur IA</div>
+                    <div class="cv-location"><i class="fas fa-location-dot"></i> Kinshasa, République Démocratique du Congo</div>
                     <div class="badge-companies">
                         Fondateur d’Amani Consulting Agency & Mema Nga • Co-fondateur de WorldConnect Inc.
                     </div>
@@ -777,7 +956,7 @@
 
                     <!-- Expérience Professionnelle -->
                     <section class="card-section">
-                        <h2 class="section-title"><i class="fas fa-history"></i>Expérience Professionnelle</h2>
+                        <h2 class="section-title"><i class="fas fa-timeline"></i>Expérience Professionnelle</h2>
                         <div class="experience-item">
                             <div class="job-title">FONDATEUR & DIRECTEUR</div>
                             <span class="company-name">Amani Consulting Agency — Kinshasa, RDC</span>
@@ -810,17 +989,17 @@
                             <h2 class="section-title"><i class="fas fa-globe"></i>Associatif</h2>
                             <div class="job-title">Share With Orphans</div>
                             <span class="company-name">États-Unis</span>
-                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0;">Participation active à des programmes d'éducation et de développement humain dans un cadre associatif international.</p>
+                            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0;">Participation active à des programmes d'éducation et de développement humain dans un cadre associatif international.</p>
                         </section>
                         <section class="card-section" style="margin-bottom: 0;">
                             <h2 class="section-title"><i class="fas fa-graduation-cap"></i>Formation</h2>
                             <div class="job-title">LICENCE EN GESTION</div>
                             <span class="company-name">ISP Gombe — Kinshasa, RDC</span>
-                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0;">Management, administration, finances, entrepreneuriat, marketing et gestion de projets.</p>
+                            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0;">Management, administration, finances, entrepreneuriat, marketing et gestion de projets.</p>
                         </section>
                     </div>
 
-                    <div style="height: 20px;"></div>
+                    <div style="height: 15px;"></div>
 
                     <!-- Compétences & Langues -->
                     <section class="card-section">
@@ -841,15 +1020,29 @@
                                 </table>
                             </div>
                         </div>
-                        <p style="margin-top: 15px; font-size: 0.9rem;"><strong>Langues :</strong> Français (Courant) &nbsp;|&nbsp; Anglais (Très bon niveau professionnel)</p>
+                        <p style="margin-top: 15px; font-size: 0.95rem;"><strong>Langues :</strong> Français (Courant) &nbsp;|&nbsp; Anglais (Très bon niveau professionnel)</p>
                     </section>
                 </main>
             </div>
-            <button class="back-btn" style="margin-top: 20px;" onclick="showHome()">⬅️ Retour à l'accueil</button>
+            <button class="back-btn" style="margin-top: 15px;" onclick="showHome()">⬅️ Retour à l'accueil</button>
         </div>
 
+        <!-- FOOTER PROFESSIONNEL -->
         <footer>
-            <p>Plateforme Éducative Maternelle & Portfolio — Conçue par Mister Amani — Bilingue (FR/EN)</p>
+            <div class="footer-content">
+                <h3>Restons en contact</h3>
+                <p>Pour toute question relative aux cours ou pour un accompagnement personnalisé, contactez-nous directement.</p>
+                
+                <div class="footer-links">
+                    <a href="https://wa.me/243827051405" target="_blank"><i class="fab fa-whatsapp" style="color: #25d366;"></i> WhatsApp</a>
+                    <a href="mailto:amani@example.com"><i class="fas fa-envelope"></i> Email</a>
+                    <a href="#" onclick="showCV(); return false;"><i class="fas fa-id-card"></i> CV Pro</a>
+                </div>
+
+                <div class="footer-copy">
+                    <p>© 2026 Le Petit Monde & Espace Pro — Conçu avec excellence par Mister Amani</p>
+                </div>
+            </div>
         </footer>
     </div>
 
@@ -1113,6 +1306,7 @@
         const detailContent = document.getElementById('detail-content');
         const cvView = document.getElementById('cv-view');
         const introAmani = document.getElementById('intro-amani');
+        const welcomeBox = document.getElementById('welcome-box');
 
         function speakText(text, lang) {
             if ('speechSynthesis' in window) {
@@ -1124,6 +1318,10 @@
             } else {
                 alert("Désolé, votre navigateur ne supporte pas la lecture audio.");
             }
+        }
+
+        function scrollToThemes() {
+            homeContainer.scrollIntoView({ behavior: 'smooth' });
         }
 
         function renderHome() {
@@ -1148,6 +1346,7 @@
             if (!theme) return;
 
             homeContainer.style.display = 'none';
+            welcomeBox.style.display = 'none';
             introAmani.style.display = 'none';
             cvView.style.display = 'none';
             detailView.style.display = 'block';
@@ -1175,7 +1374,7 @@
                         <div class="phrase-item">
                             <div class="phrase-text">
                                 <strong>${index + 1}.</strong> 🇫🇷 ${p.fr} <br>
-                                <span style="color: #4299E1; font-weight: normal; font-size: 0.95rem;">🇬🇧 ${p.en}</span>
+                                <span style="color: var(--secondary); font-weight: normal; font-size: 0.95rem;">🇬🇧 ${p.en}</span>
                             </div>
                             <div class="phrase-btns">
                                 <button class="btn-small" onclick="speakText('${p.fr}', 'fr')">🔊 FR</button>
@@ -1188,19 +1387,19 @@
 
             detailContent.innerHTML = `
                 <div class="detail-header">
-                    <h2>🌟 ${theme.frTitle} / ${theme.enTitle} 🌟</h2>
+                    <h2>✨ ${theme.frTitle} / ${theme.enTitle} ✨</h2>
                 </div>
                 <img class="detail-img" src="${theme.image}" alt="${theme.frTitle}">
                 
                 <div class="lang-section">
-                    <p style="font-size: 1.1rem; margin: 0 0 10px 0;"><strong>Français :</strong> ${theme.frDesc}</p>
+                    <p style="font-size: 1.05rem; margin: 0 0 10px 0; font-weight: 500;"><strong>Français :</strong> ${theme.frDesc}</p>
                     <button class="btn-audio" onclick="speakText('${theme.frTitle}. ${theme.frDesc}', 'fr')">
                         🔊 Écouter le cours (FR)
                     </button>
                 </div>
 
                 <div class="lang-section">
-                    <p style="font-size: 1.1rem; margin: 0 0 10px 0;"><strong>English :</strong> ${theme.enDesc}</p>
+                    <p style="font-size: 1.05rem; margin: 0 0 10px 0; font-weight: 500;"><strong>English :</strong> ${theme.enDesc}</p>
                     <button class="btn-audio en" onclick="speakText('${theme.enTitle}. ${theme.enDesc}', 'en')">
                         🔊 Listen to lesson (EN)
                     </button>
@@ -1208,14 +1407,14 @@
 
                 ${theme.vocab && theme.vocab.length > 0 ? `
                 <div class="vocab-container">
-                    <h3 style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; text-align: center; margin-bottom: 20px;">🖼️ Les 20 mots illustrés</h3>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; text-align: center; margin-bottom: 20px; font-weight: 700;">🖼️ Les 20 mots illustrés</h3>
                     <div class="vocab-grid">${vocabHTML}</div>
                 </div>
                 ` : ''}
 
                 ${theme.phrases && theme.phrases.length > 0 ? `
                 <div class="phrases-container">
-                    <h3 style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; text-align: center; margin-bottom: 20px;">💬 Phrases courantes (FR / EN)</h3>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; text-align: center; margin-bottom: 20px; font-weight: 700;">💬 Phrases courantes (FR / EN)</h3>
                     <div style="margin-top: 20px;">${phrasesHTML}</div>
                 </div>
                 ` : ''}
@@ -1225,6 +1424,7 @@
 
         function showCV() {
             homeContainer.style.display = 'none';
+            welcomeBox.style.display = 'none';
             introAmani.style.display = 'none';
             detailView.style.display = 'none';
             cvView.style.display = 'block';
@@ -1235,6 +1435,7 @@
             detailView.style.display = 'none';
             cvView.style.display = 'none';
             homeContainer.style.display = 'grid';
+            welcomeBox.style.display = 'block';
             introAmani.style.display = 'flex';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
