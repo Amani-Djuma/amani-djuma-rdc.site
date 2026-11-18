@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORLDCONNECT — Dashboard Exécutif, Contrats Universels, Facturation & Décaissements</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #print-modal-zone, #print-modal-zone * { visibility: visible; }
+            #print-modal-zone { position: fixed; inset: 0; background: white; color: black; padding: 28px; z-index: 9999; }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased">
+
+    <!-- ACCÈS DIRECT AU DASHBOARD (PAS DE CONNEXION À L'ACCUEIL) -->
+    <div id="main-dashboard">
+        <header class="bg-slate-900/95 backdrop-blur border-b border-slate-800 px-4 sm:px-6 py-3.5 sticky top-0 z-30">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-400 to-indigo-500 flex items-center justify-center font-black text-slate-950 text-lg">WC</div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="font-extrabold text-sm sm:text-base text-white">WORLDCONNECT — Cockpit Exécutif</h1>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-700">ACCÈS DIRECT</span>
+                        </div>
+                        <p class="text-[11px] text-cyan-400 font-medium">Gestion Unifiée : Contrats Universels, Salaires, Services & Facturation</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="exportAllExcel()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-extrabold px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow">
+                        <i class="ph-bold ph-microsoft-excel-logo text-base"></i> Exporter Tout (.XLSX)
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
+            <!-- BANDEAU KPI EXÉCUTIFS -->
+            <section class="bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border border-indigo-800/60 rounded-3xl p-5 shadow-xl space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-sm sm:text-base font-extrabold text-white uppercase tracking-wide flex items-center gap-2">
+                            <i class="ph-fill ph-crown text-amber-400"></i> Situation Financière & Trésorerie en Temps Réel
+                        </h2>
+                        <p class="text-xs text-slate-400">Synthèse consolidée : Chiffre d'affaires facturé, décaissements salaires, autres services et bénéfice distribuable.</p>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs">
+                        <div class="bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 flex items-center gap-1.5">
+                            <span class="text-slate-400">1$ =</span>
+                            <input type="number" id="cfg-cdf" value="2850" oninput="recalc()" class="w-16 bg-transparent font-mono font-bold text-cyan-400 focus:outline-none">
+                            <span class="text-slate-400">FC</span>
+                        </div>
+                        <div class="bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 flex items-center gap-1.5">
+                            <span class="text-slate-400">TVA:</span>
+                            <input type="number" id="cfg-tva" value="16" oninput="recalc()" class="w-10 bg-transparent font-mono font-bold text-cyan-400 focus:outline-none">
+                            <span class="text-slate-400">%</span>
+                        </div>
+                        <div class="bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 flex items-center gap-1.5">
+                            <span class="text-slate-400">Réserve:</span>
+                            <input type="number" id="cfg-res" value="10" oninput="recalc()" class="w-10 bg-transparent font-mono font-bold text-amber-400 focus:outline-none">
+                            <span class="text-slate-400">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <div class="bg-slate-950/90 p-3.5 rounded-2xl border border-slate-800">
+                        <span class="text-[10px] font-bold uppercase text-slate-400">CA Facturé Multi-Services</span>
+                        <p id="kpi-ca" class="text-lg font-extrabold text-white mt-1">$0</p>
+                        <p id="kpi-ca-fc" class="text-[10px] font-mono text-slate-400">0 FC</p>
+                    </div>
+                    <div class="bg-slate-950/90 p-3.5 rounded-2xl border border-emerald-900/60">
+                        <span class="text-[10px] font-bold uppercase text-emerald-400">Cash Réel Encaissé</span>
+                        <p id="kpi-paid" class="text-lg font-extrabold text-emerald-400 mt-1">$0</p>
+                        <p id="kpi-due" class="text-[10px] font-mono text-amber-400">Créances: $0</p>
+                    </div>
+                    <div class="bg-slate-950/90 p-3.5 rounded-2xl border border-rose-900/60">
+                        <span class="text-[10px] font-bold uppercase text-rose-400">Décaissements Salaires</span>
+                        <p id="kpi-sal" class="text-lg font-extrabold text-rose-400 mt-1">$0</p>
+                        <p class="text-[10px] text-slate-400">Paie & Primes</p>
+                    </div>
+                    <div class="bg-slate-950/90 p-3.5 rounded-2xl border border-orange-900/60">
+                        <span class="text-[10px] font-bold uppercase text-orange-400">Décaissements Services</span>
+                        <p id="kpi-srv" class="text-lg font-extrabold text-orange-400 mt-1">$0</p>
+                        <p class="text-[10px] text-slate-400">Loyer, IT, Prestataires</p>
+                    </div>
+                    <div class="bg-slate-950/90 p-3.5 rounded-2xl border border-slate-800">
+                        <span class="text-[10px] font-bold uppercase text-amber-400">Réserve Société</span>
+                        <p id="kpi-res" class="text-lg font-extrabold text-amber-300 mt-1">$0</p>
+                        <p class="text-[10px] text-slate-400">Fonds protégé</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-emerald-600 to-teal-800 p-3.5 rounded-2xl border border-emerald-400 shadow-lg">
+                        <span class="text-[10px] font-bold uppercase text-emerald-100">Bénéfice Net Associés</span>
+                        <p id="kpi-net" class="text-lg font-black text-white mt-1">$0</p>
+                        <p id="kpi-net-fc" class="text-[10px] font-mono text-emerald-100">0 FC</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MODULE 1 : CONTRATS UNIVERSELS (POUR TOUT LE MONDE) -->
+            <section class="bg-slate-900 rounded-3xl border border-slate-800 p-5 sm:p-6 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+                            <i class="ph-fill ph-users-three text-cyan-400"></i> 1. Contrats Universels (Pour Tout le Monde : Salariés, Associés, Prestataires, Formateurs)
+                        </h2>
+                        <p class="text-xs text-slate-400">Gérez les contrats de toute l'équipe. Chaque contrat dispose d'un accès Word (.doc) pour modifier et PDF pour enregistrer ou envoyer.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span id="badge-pct-total" class="text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300">Total Parts : 100%</span>
+                        <button onclick="addPartner()" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-extrabold px-3.5 py-2 rounded-xl">+ Nouveau Collaborateur / Contrat</button>
+                    </div>
+                </div>
+
+                <div id="partners-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </section>
+
+            <!-- MODULE 2 : FACTURATION MULTI-SERVICES -->
+            <section class="bg-slate-900 rounded-3xl border border-slate-800 p-5 sm:p-6 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+                            <i class="ph-fill ph-receipt text-emerald-400"></i> 2. Facturation Multi-Services (Call Center, Academy, IT, Consulting, Livraison)
+                        </h2>
+                        <p class="text-xs text-slate-400">Facturez tous les services et suivez les encaissements avec reçus PDF officiels.</p>
+                    </div>
+                </div>
+
+                <form onsubmit="addServiceInvoice(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2.5 text-xs bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Client *</label>
+                        <input type="text" id="inv-client" required placeholder="Nom du client" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 text-white font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Service *</label>
+                        <select id="inv-service" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 text-cyan-300 font-bold">
+                            <option value="Call Center B2B">Call Center B2B</option>
+                            <option value="Développement Web & IT">Développement Web & IT</option>
+                            <option value="WorldConnect Academy">WorldConnect Academy</option>
+                            <option value="Consulting & Audit">Consulting & Audit</option>
+                            <option value="Livraison & Logistique">Livraison & Logistique</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Prestation *</label>
+                        <input type="text" id="inv-desc" required placeholder="Détail..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Qté</label>
+                        <input type="number" id="inv-qty" value="1" min="1" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 font-mono text-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Prix Unit. ($)</label>
+                        <input type="number" id="inv-pu" value="500" step="0.01" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 font-mono text-cyan-400 font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Statut</label>
+                        <select id="inv-status" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 text-white font-semibold">
+                            <option value="Payée">Payée</option>
+                            <option value="Paiement Partiel">Paiement Partiel</option>
+                            <option value="En attente">En attente</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-2 px-3 rounded-xl">+ Facturer</button>
+                    </div>
+                </form>
+
+                <div class="overflow-x-auto rounded-2xl border border-slate-800">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-slate-400 uppercase text-[11px] bg-slate-950">
+                                <th class="py-2.5 px-3">N° Facture</th>
+                                <th class="py-2.5 px-3">Client</th>
+                                <th class="py-2.5 px-3">Service</th>
+                                <th class="py-2.5 px-3">Prestation</th>
+                                <th class="py-2.5 px-3">Total TTC ($)</th>
+                                <th class="py-2.5 px-3">Encaissé ($)</th>
+                                <th class="py-2.5 px-3">Statut</th>
+                                <th class="py-2.5 px-3 text-right">Reçu PDF</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoices-tbody" class="divide-y divide-slate-800"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- MODULE 3 : DÉCAISSEMENTS SALAIRES & AUTRES SERVICES -->
+            <section class="bg-slate-900 rounded-3xl border border-slate-800 p-5 sm:p-6 space-y-4">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+                            <i class="ph-fill ph-money text-rose-400"></i> 3. Décaissements de Salaires & Autres Services
+                        </h2>
+                        <p class="text-xs text-slate-400">Enregistrez les décaissements de salaires du personnel et les autres charges de services (loyer, fibre, prestataires).</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-xs">
+                        <select id="filter-dec-type" onchange="recalc()" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-semibold">
+                            <option value="ALL">Tous décaissements</option>
+                            <option value="Salaire & Paie">Salaires & Paie</option>
+                            <option value="Autre Service Externe">Autres Services</option>
+                        </select>
+                        <button onclick="exportDisbursementsExcel()" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5">
+                            <i class="ph-bold ph-file-xls"></i> Exporter Décaissements
+                        </button>
+                    </div>
+                </div>
+
+                <form onsubmit="addDisbursement(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 text-xs bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Type *</label>
+                        <select id="dec-type" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 text-rose-300 font-bold">
+                            <option value="Salaire & Paie">Salaire & Paie</option>
+                            <option value="Autre Service Externe">Autre Service Externe</option>
+                            <option value="Loyer & Bureaux">Loyer & Bureaux</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Bénéficiaire *</label>
+                        <input type="text" id="dec-ben" required placeholder="Nom bénéficiaire..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Motif *</label>
+                        <input type="text" id="dec-motif" required placeholder="Motif..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Montant ($) *</label>
+                        <input type="number" id="dec-amount" required step="0.01" min="1" placeholder="450" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 font-mono font-bold text-rose-400">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-bold mb-1">Statut</label>
+                        <select id="dec-status" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 text-white font-semibold">
+                            <option value="Payé">Payé</option>
+                            <option value="Approuvé">Approuvé</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-extrabold py-2 px-3 rounded-xl">+ Décaisser</button>
+                    </div>
+                </form>
+
+                <div class="overflow-x-auto rounded-2xl border border-slate-800">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-slate-400 uppercase text-[11px] bg-slate-950">
+                                <th class="py-2.5 px-3">Réf</th>
+                                <th class="py-2.5 px-3">Date</th>
+                                <th class="py-2.5 px-3">Type</th>
+                                <th class="py-2.5 px-3">Bénéficiaire</th>
+                                <th class="py-2.5 px-3">Motif</th>
+                                <th class="py-2.5 px-3">Montant ($)</th>
+                                <th class="py-2.5 px-3">Montant (FC)</th>
+                                <th class="py-2.5 px-3">Statut</th>
+                                <th class="py-2.5 px-3 text-right">Bon PDF</th>
+                            </tr>
+                        </thead>
+                        <tbody id="disbursements-tbody" class="divide-y divide-slate-800"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODALE CONTRAT WORD / PDF -->
+    <div id="contract-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full p-6 shadow-2xl space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                <div>
+                    <h3 id="ctr-modal-title" class="text-base font-extrabold text-white">Contrat Universel — Édition Word & Export PDF</h3>
+                    <p class="text-xs text-slate-400">Modifiez le contrat pour n'importe quel collaborateur, téléchargez-le en <strong>Word (.doc)</strong> ou enregistrez en <strong>PDF</strong>.</p>
+                </div>
+                <button onclick="document.getElementById('contract-modal').classList.add('hidden')" class="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold">Fermer</button>
+            </div>
+
+            <textarea id="ctr-editor-text" rows="13" class="w-full bg-white text-slate-900 rounded-2xl p-5 font-serif text-sm leading-relaxed focus:outline-none shadow-inner"></textarea>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+                <button onclick="saveContractEdits()" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 text-xs font-extrabold px-4 py-2.5 rounded-xl">Enregistrer</button>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="downloadContractAsWord()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-extrabold px-4 py-2.5 rounded-xl flex items-center gap-1.5">
+                        <i class="ph-bold ph-file-doc text-base"></i> Word (.DOC)
+                    </button>
+                    <button onclick="printContractAsPDF()" class="bg-rose-600 hover:bg-rose-500 text-white text-xs font-extrabold px-4 py-2.5 rounded-xl flex items-center gap-1.5">
+                        <i class="ph-bold ph-file-pdf text-base"></i> Enregistrer PDF
+                    </button>
+                    <button onclick="sendContractWhatsApp()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-extrabold px-4 py-2.5 rounded-xl flex items-center gap-1.5">
+                        <i class="ph-bold ph-paper-plane-tilt text-base"></i> WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE IMPRESSION PDF -->
+    <div id="receipt-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white text-slate-900 rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-4">
+            <div id="print-modal-zone" class="space-y-4"></div>
+            <div class="flex justify-end gap-2 pt-3 border-t border-slate-200">
+                <button onclick="document.getElementById('receipt-modal').classList.add('hidden')" class="px-4 py-2 rounded-xl bg-slate-200 text-slate-800 text-xs font-bold">Fermer</button>
+                <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-extrabold flex items-center gap-1.5">
+                    <i class="ph-bold ph-printer"></i> Imprimer / PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DB_KEY = 'wc_exec_dashboard_v6';
+        let editingPartnerIdx = null;
+
+        let db = JSON.parse(localStorage.getItem(DB_KEY) || 'null') || {
+            cdfRate: 2850, tva: 16, reservePct: 10,
+            partners: [
+                {
+                    code: 'CONT-01', name: 'Amani Djuma Amani', role: 'Fondateur & Directeur Général',
+                    capital: 15000, pct: 45, contractRef: 'CTR-WC-2026-01', contractStatus: 'Actif', phone: '+243810000001',
+                    contractText: "CONTRAT UNIVERSEL DE COLLABORATION N° CTR-WC-2026-01\n\nENTRE : WORLDCONNECT SARL\nET : Amani Djuma Amani (Fondateur & Directeur Général)\n\nARTICLE 1 — OBJET : Contrat universel de direction, gestion et participation.\nARTICLE 2 — PART : 45% des bénéfices nets distribuables."
+                },
+                {
+                    code: 'CONT-02', name: 'Patrick Ilunga', role: 'Associé & Directeur Opérations',
+                    capital: 8500, pct: 25, contractRef: 'CTR-WC-2026-02', contractStatus: 'Actif', phone: '+243810000002',
+                    contractText: "CONTRAT UNIVERSEL DE COLLABORATION N° CTR-WC-2026-02\n\nENTRE : WORLDCONNECT SARL\nET : Patrick Ilunga (Associé & Directeur des Opérations)\n\nARTICLE 1 — OBJET : Supervision opérationnelle et académique.\nARTICLE 2 — PART : 25% des bénéfices nets distribuables."
+                },
+                {
+                    code: 'CONT-03', name: 'Partenaire Tech & VoIP', role: 'Partenaire Infrastructure',
+                    capital: 6500, pct: 20, contractRef: 'CTR-WC-2026-03', contractStatus: 'Actif', phone: '+243820000003',
+                    contractText: "CONTRAT UNIVERSEL DE COLLABORATION N° CTR-WC-2026-03\n\nENTRE : WORLDCONNECT SARL\nET : Partenaire Tech & VoIP\n\nARTICLE 1 — OBJET : Fourniture technique et télécom.\nARTICLE 2 — PART : 20% des bénéfices."
+                },
+                {
+                    code: 'CONT-04', name: 'Fonds Réserve Croissance', role: 'Réserve Investissement',
+                    capital: 3000, pct: 10, contractRef: 'CTR-WC-2026-04', contractStatus: 'En révision', phone: '+243810000004',
+                    contractText: "CONVENTION DE RÉSERVE N° CTR-WC-2026-04\n\nAffectation de 10% des bénéfices au fonds de développement."
+                }
+            ],
+            invoices: [
+                { num: 'FAC-2026-001', date: '2026-11-01', client: 'Horizon Telecom RDC', service: 'Call Center B2B', desc: 'Support client bilingue (12 400 appels)', qty: 12400, pu: 0.68, status: 'Payée' },
+                { num: 'FAC-2026-002', date: '2026-11-05', client: 'Banque Populaire du Congo', service: 'Développement Web & IT', desc: 'Portail client & maintenance serveur', qty: 1, pu: 2800, status: 'Payée' },
+                { num: 'FAC-2026-003', date: '2026-11-09', client: 'Vodacom Business RDC', service: 'WorldConnect Academy', desc: 'Formation Anglais Affaires (25 agents)', qty: 25, pu: 120, status: 'Paiement Partiel' },
+                { num: 'FAC-2026-004', date: '2026-11-12', client: 'FormaTech Kinshasa', service: 'Consulting & Audit', desc: 'Audit organisationnel & KYC', qty: 1, pu: 2000, status: 'En attente' }
+            ],
+            disbursements: [
+                { ref: 'DEC-SAL-01', date: '2026-11-05', type: 'Salaire & Paie', ben: 'Amani Djuma (Directeur Général)', motif: 'Salaire mensuel & prime', amount: 1025, status: 'Payé' },
+                { ref: 'DEC-SAL-02', date: '2026-11-05', type: 'Salaire & Paie', ben: 'Patrick Ilunga (Directeur Opérations)', motif: 'Salaire mensuel', amount: 780, status: 'Payé' },
+                { ref: 'DEC-SRV-01', date: '2026-11-08', type: 'Autre Service Externe', ben: 'Fournisseur Fibre & Cloud', motif: 'Bande passante', amount: 450, status: 'Payé' }
+            ]
+        };
+
+        function saveDB() {
+            localStorage.setItem(DB_KEY, JSON.stringify(db));
+        }
+
+        function addServiceInvoice(e) {
+            e.preventDefault();
+            db.invoices.unshift({
+                num: 'FAC-2026-' + String(db.invoices.length + 1).padStart(3, '0'),
+                date: new Date().toISOString().slice(0, 10),
+                client: document.getElementById('inv-client').value.trim(),
+                service: document.getElementById('inv-service').value,
+                desc: document.getElementById('inv-desc').value.trim(),
+                qty: Number(document.getElementById('inv-qty').value),
+                pu: Number(document.getElementById('inv-pu').value),
+                status: document.getElementById('inv-status').value
+            });
+            document.getElementById('inv-client').value = '';
+            document.getElementById('inv-desc').value = '';
+            saveDB(); recalc();
+        }
+
+        function addDisbursement(e) {
+            e.preventDefault();
+            const type = document.getElementById('dec-type').value;
+            db.disbursements.unshift({
+                ref: (type === 'Salaire & Paie' ? 'DEC-SAL-' : 'DEC-SRV-') + String(db.disbursements.length + 1).padStart(2, '0'),
+                date: new Date().toISOString().slice(0, 10),
+                type,
+                ben: document.getElementById('dec-ben').value.trim(),
+                motif: document.getElementById('dec-motif').value.trim(),
+                amount: Number(document.getElementById('dec-amount').value),
+                status: document.getElementById('dec-status').value
+            });
+            document.getElementById('dec-ben').value = '';
+            document.getElementById('dec-motif').value = '';
+            document.getElementById('dec-amount').value = '';
+            saveDB(); recalc();
+        }
+
+        function addPartner() {
+            const name = prompt('Nom & Prénom du collaborateur ou associé :');
+            if (!name) return;
+            const role = prompt('Qualité / Rôle (ex: Salarié, Formateur, Associé) :', 'Collaborateur') || 'Collaborateur';
+            const cap = Number(prompt('Apport ou Salaire de base ($) :', '1000') || 0);
+            const pct = Number(prompt('Pourcentage de part (%) :', '5') || 5);
+            const code = 'CONT-' + String(db.partners.length + 1).padStart(2, '0');
+            const ref = 'CTR-WC-2026-' + String(db.partners.length + 1).padStart(2, '0');
+            db.partners.push({
+                code, name, role, capital: cap, pct, contractRef: ref, contractStatus: 'Actif', phone: '+243810000000',
+                contractText: `CONTRAT UNIVERSEL N° ${ref}\n\nENTRE : WORLDCONNECT SARL\nET : ${name} (${role})\n\nARTICLE 1 — OBJET : Contrat universel de collaboration.\nARTICLE 2 — CONDITIONS : Rémunération / Quote-part de ${pct}%.`
+            });
+            saveDB(); recalc();
+        }
+
+        function updatePartnerPct(idx, val) {
+            db.partners[idx].pct = Number(val || 0);
+            saveDB(); recalc();
+        }
+
+        function updatePartnerStatus(idx, st) {
+            db.partners[idx].contractStatus = st;
+            saveDB(); recalc();
+        }
+
+        function openContractEditor(idx) {
+            editingPartnerIdx = idx;
+            const p = db.partners[idx];
+            document.getElementById('ctr-modal-title').textContent = `Contrat Universel ${p.contractRef} — ${p.name}`;
+            document.getElementById('ctr-editor-text').value = p.contractText;
+            document.getElementById('contract-modal').classList.remove('hidden');
+        }
+
+        function saveContractEdits() {
+            if (editingPartnerIdx === null) return;
+            db.partners[editingPartnerIdx].contractText = document.getElementById('ctr-editor-text').value;
+            saveDB();
+            alert('Contrat mis à jour avec succès.');
+        }
+
+        function downloadContractAsWord() {
+            if (editingPartnerIdx === null) return;
+            saveContractEdits();
+            const p = db.partners[editingPartnerIdx];
+            const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body style="font-family:Calibri;padding:30px;"><h2>WORLDCONNECT — ${p.contractRef}</h2><pre style="white-space:pre-wrap;font-family:Calibri;font-size:12pt;">${p.contractText}</pre></body></html>`;
+            const blob = new Blob(['﻿', html], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = `Contrat_${p.name.replace(/\s+/g, '_')}_${p.contractRef}.doc`;
+            a.click(); URL.revokeObjectURL(url);
+        }
+
+        function printContractAsPDF() {
+            if (editingPartnerIdx === null) return;
+            saveContractEdits();
+            const p = db.partners[editingPartnerIdx];
+            document.getElementById('contract-modal').classList.add('hidden');
+            document.getElementById('print-modal-zone').innerHTML = `
+                <div class="border-b-2 border-slate-900 pb-4 flex justify-between items-start">
+                    <div><h2 class="text-xl font-extrabold text-slate-900">WORLDCONNECT SARL</h2><p class="text-xs text-slate-500">Contrat Universel Officiel</p></div>
+                    <div class="text-right"><span class="px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-100 text-indigo-800">${p.contractRef}</span><p class="text-xs font-mono font-bold mt-1">Statut : ${p.contractStatus}</p></div>
+                </div>
+                <div class="whitespace-pre-wrap font-serif text-sm leading-relaxed text-slate-800 bg-slate-50 p-5 rounded-2xl border border-slate-200">${p.contractText}</div>
+                <div class="grid grid-cols-2 gap-6 pt-6 text-xs">
+                    <div class="border-t border-slate-400 pt-2"><strong>Direction Générale</strong><br>Cachet & Signature</div>
+                    <div class="border-t border-slate-400 pt-2 text-right"><strong>${p.name}</strong><br>Lu et approuvé</div>
+                </div>
+            `;
+            document.getElementById('receipt-modal').classList.remove('hidden');
+        }
+
+        function sendContractWhatsApp() {
+            if (editingPartnerIdx === null) return;
+            saveContractEdits();
+            const p = db.partners[editingPartnerIdx];
+            window.open(`https://wa.me/${(p.phone || '').replace(/\D/g, '')}?text=` + encodeURIComponent(`Bonjour ${p.name}, voici votre contrat ${p.contractRef} chez WORLDCONNECT:
+
+${p.contractText}`), '_blank');
+        }
+
+        function openInvoiceReceipt(idx) {
+            const inv = db.invoices[idx];
+            const ttc = (inv.qty * inv.pu) * (1 + db.tva / 100);
+            const cdf = Math.round(ttc * db.cdfRate);
+            document.getElementById('print-modal-zone').innerHTML = `
+                <div class="border-b-2 border-slate-900 pb-4 flex justify-between items-start">
+                    <div><h2 class="text-xl font-extrabold text-slate-900">WORLDCONNECT SARL</h2><p class="text-xs text-slate-500">Reçu Officiel Multi-Services</p></div>
+                    <div class="text-right"><span class="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800">REÇU</span><p class="text-xs font-mono font-bold mt-1">${inv.num}</p></div>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl text-xs space-y-1">
+                    <p><span class="text-slate-500">Client :</span> <strong>${inv.client}</strong></p>
+                    <p><span class="text-slate-500">Service :</span> <strong>${inv.service}</strong> — ${inv.desc}</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-900 text-white flex justify-between items-center">
+                    <div><p class="text-[11px] uppercase text-slate-400">Total TTC</p><p class="text-xs text-cyan-300 font-mono">${cdf.toLocaleString('fr-FR')} FC</p></div>
+                    <span class="text-2xl font-extrabold text-emerald-400">$${ttc.toFixed(2)}</span>
+                </div>
+            `;
+            document.getElementById('receipt-modal').classList.remove('hidden');
+        }
+
+        function openDisbursementReceipt(idx) {
+            const d = db.disbursements[idx];
+            document.getElementById('print-modal-zone').innerHTML = `
+                <div class="border-b-2 border-slate-900 pb-4 flex justify-between items-start">
+                    <div><h2 class="text-xl font-extrabold text-slate-900">WORLDCONNECT SARL</h2><p class="text-xs text-slate-500">Bon de Décaissement</p></div>
+                    <div class="text-right"><span class="px-3 py-1 rounded-full text-xs font-extrabold bg-rose-100 text-rose-800">${d.type}</span><p class="text-xs font-mono font-bold mt-1">${d.ref}</p></div>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl text-xs space-y-1.5">
+                    <p><span class="text-slate-500">Bénéficiaire :</span> <strong>${d.ben}</strong></p>
+                    <p><span class="text-slate-500">Motif :</span> <strong>${d.motif}</strong></p>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-900 text-white flex justify-between items-center">
+                    <div><p class="text-[11px] uppercase text-slate-400">Montant Décaissé</p><p class="text-xs text-cyan-300 font-mono">${Math.round(d.amount * db.cdfRate).toLocaleString('fr-FR')} FC</p></div>
+                    <span class="text-2xl font-extrabold text-rose-400">$${d.amount.toFixed(2)}</span>
+                </div>
+            `;
+            document.getElementById('receipt-modal').classList.remove('hidden');
+        }
+
+        function recalc() {
+            db.cdfRate = Number(document.getElementById('cfg-cdf').value || 2850);
+            db.tva = Number(document.getElementById('cfg-tva').value || 16);
+            db.reservePct = Number(document.getElementById('cfg-res').value || 10);
+
+            let totalCA = 0, totalPaid = 0, totalDue = 0;
+            document.getElementById('invoices-tbody').innerHTML = db.invoices.map((inv, idx) => {
+                const ttc = (inv.qty * inv.pu) * (1 + db.tva / 100);
+                const paid = inv.status === 'Payée' ? ttc : (inv.status === 'Paiement Partiel' ? ttc * 0.5 : 0);
+                totalCA += ttc; totalPaid += paid; totalDue += Math.max(0, ttc - paid);
+                return `
+                    <tr class="hover:bg-slate-800/40">
+                        <td class="py-2.5 px-3 font-mono font-bold text-indigo-400">${inv.num}</td>
+                        <td class="py-2.5 px-3 font-bold text-white">${inv.client}</td>
+                        <td class="py-2.5 px-3 text-cyan-300 font-semibold">${inv.service}</td>
+                        <td class="py-2.5 px-3 text-slate-300">${inv.desc}</td>
+                        <td class="py-2.5 px-3 font-mono">$${ttc.toFixed(2)}</td>
+                        <td class="py-2.5 px-3 font-mono font-bold text-emerald-400">$${paid.toFixed(2)}</td>
+                        <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300">${inv.status}</span></td>
+                        <td class="py-2.5 px-3 text-right"><button onclick="openInvoiceReceipt(${idx})" class="bg-slate-800 hover:bg-indigo-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">Reçu</button></td>
+                    </tr>
+                `;
+            }).join('');
+
+            let salOut = 0, srvOut = 0;
+            db.disbursements.forEach(d => { if (d.type === 'Salaire & Paie') salOut += d.amount; else srvOut += d.amount; });
+
+            const filterType = document.getElementById('filter-dec-type').value;
+            document.getElementById('disbursements-tbody').innerHTML = db.disbursements
+                .filter(d => filterType === 'ALL' || d.type === filterType)
+                .map((d, idx) => `
+                    <tr class="hover:bg-slate-800/40">
+                        <td class="py-2.5 px-3 font-mono font-bold text-rose-400">${d.ref}</td>
+                        <td class="py-2.5 px-3 text-slate-300">${d.date}</td>
+                        <td class="py-2.5 px-3 font-bold text-cyan-300">${d.type}</td>
+                        <td class="py-2.5 px-3 font-bold text-white">${d.ben}</td>
+                        <td class="py-2.5 px-3 text-slate-300">${d.motif}</td>
+                        <td class="py-2.5 px-3 font-mono font-extrabold text-rose-400">$${d.amount.toFixed(2)}</td>
+                        <td class="py-2.5 px-3 font-mono text-slate-200">${Math.round(d.amount * db.cdfRate).toLocaleString('fr-FR')} FC</td>
+                        <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300">${d.status}</span></td>
+                        <td class="py-2.5 px-3 text-right"><button onclick="openDisbursementReceipt(${idx})" class="bg-slate-800 hover:bg-rose-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">Bon</button></td>
+                    </tr>
+                `).join('');
+
+            const grossNet = Math.max(0, totalPaid - salOut - srvOut);
+            const resAmt = grossNet * (db.reservePct / 100);
+            const distNet = Math.max(0, grossNet - resAmt);
+
+            document.getElementById('kpi-ca').textContent = '$' + totalCA.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            document.getElementById('kpi-ca-fc').textContent = Math.round(totalCA * db.cdfRate).toLocaleString('fr-FR') + ' FC';
+            document.getElementById('kpi-paid').textContent = '$' + totalPaid.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            document.getElementById('kpi-due').textContent = 'Créances: $' + totalDue.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            document.getElementById('kpi-sal').textContent = '$' + salOut.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            document.getElementById('kpi-srv').textContent = '$' + srvOut.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            document.getElementById('kpi-res').textContent = '$' + resAmt.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            document.getElementById('kpi-net').textContent = '$' + distNet.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('kpi-net-fc').textContent = Math.round(distNet * db.cdfRate).toLocaleString('fr-FR') + ' FC';
+
+            const totalPct = db.partners.reduce((s, p) => s + Number(p.pct || 0), 0);
+            document.getElementById('badge-pct-total').textContent = `Total Parts : ${totalPct}%`;
+
+            document.getElementById('partners-cards').innerHTML = db.partners.map((p, idx) => {
+                const share = distNet * (p.pct / 100);
+                return `
+                    <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 text-xs">
+                        <div class="flex items-start justify-between gap-2">
+                            <div>
+                                <p class="font-extrabold text-sm text-white">${p.name}</p>
+                                <p class="text-[11px] text-slate-400">${p.role} • Base: $${Number(p.capital || 0).toLocaleString()}</p>
+                            </div>
+                            <div class="flex items-center gap-1 bg-slate-900 border border-slate-700 rounded-xl px-2 py-1">
+                                <input type="number" value="${p.pct}" min="0" max="100" step="0.5" onchange="updatePartnerPct(${idx}, this.value)" class="w-12 bg-transparent text-right font-mono font-extrabold text-cyan-400 focus:outline-none">
+                                <span class="text-cyan-400 font-bold">%</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-900/90 p-2.5 rounded-xl border border-slate-800">
+                            <div>
+                                <span class="text-[10px] uppercase text-slate-400 block">Quote-part / Dividende Net</span>
+                                <span class="font-mono font-black text-emerald-400 text-sm">$${share.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                            </div>
+                            <select onchange="updatePartnerStatus(${idx}, this.value)" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-[11px] font-bold text-amber-300">
+                                <option value="Actif" ${p.contractStatus === 'Actif' ? 'selected' : ''}>Actif</option>
+                                <option value="En révision" ${p.contractStatus === 'En révision' ? 'selected' : ''}>En révision</option>
+                                <option value="Suspendu" ${p.contractStatus === 'Suspendu' ? 'selected' : ''}>Suspendu</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                            <span class="text-[11px] font-mono text-slate-400">Réf : <strong class="text-slate-200">${p.contractRef}</strong></span>
+                            <button onclick="openContractEditor(${idx})" class="bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold px-3 py-1.5 rounded-xl flex items-center gap-1.5">
+                                <i class="ph-bold ph-file-text"></i> Contrat Word / PDF & Envoyer
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            saveDB();
+        }
+
+        function exportAllExcel() {
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(db.invoices), 'Facturation');
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(db.disbursements), 'Decaissements');
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(db.partners), 'Contrats_Universels');
+            XLSX.writeFile(wb, 'WorldConnect_Dashboard_Executif_Complet.xlsx');
+        }
+
+        window.onload = recalc;
+    </script>
+</body>
+</html>
